@@ -29,6 +29,7 @@ import TugasMTK from './pages/TugasMTK';
 import TugasBio from './pages/TugasBio';
 import ProfileEdit from './pages/CompleteRegistration';
 import ProfilePicture from './pages/ProfilePicture';
+import Contoh from './pages/Contoh';
 
 // Menaruh daftar routing disini
 const router = createBrowserRouter([
@@ -135,6 +136,11 @@ const router = createBrowserRouter([
   {
     path: '/testredirect',
     element: <PrivateRoute><h1>Hello</h1></PrivateRoute>,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/testcontoh/:id',
+    element: <Contoh />,
     errorElement: <ErrorPage />
   }
 ]);
