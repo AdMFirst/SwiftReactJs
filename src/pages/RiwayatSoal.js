@@ -1,21 +1,32 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import NavigationBar from "../components/NavigationBar";
+import { useState } from 'react';
 
 export default function RiwayatSoal() {
-    var DataTab = [
-      {
-        nama: "Try Out",
-        tipe: "UTBK",
-        icon: "fa fa-book"
-      },
-      {
-        nama: "Tumbuhan",
-        tipe: "Biologi",
-        icon: "fa fa-clock-o"
-      },
-    ];
-
+  const [DataTab, setDataTab] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
+  if (!dataFetched){
+  fetch(process.env.REACT_APP_BACKEND_URi+'/historyTugas/dataHistory', {
+      method: 'GET',
+      //body: JSON.stringify({id: tugas}),
+      headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+      }
+  }).then(response => {
+      if (response.ok) {
+          return response.json();
+      }
+      throw new Error(response.statusText);
+  }).then(json => {
+    console.log(json)
+      setDataTab(json)
+      setDataFetched(true);
+  }).catch(error => {
+      alert(error.message);
+  });
+}
     return (
         <div class="container-fluid" style={{ backgroundColor: "#fbeeeb", minHeight:"100vh"}}>
         <link
