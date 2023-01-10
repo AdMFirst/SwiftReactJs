@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import { Navigate } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
-
+import {Buffer} from 'buffer';
 
 export const PrivateRoute = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null)  
@@ -35,3 +35,30 @@ export const PrivateRoute = (props) => {
     }
   
 };
+
+export const AdminRoute = (props) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)  
+    useEffect(() => {
+        let base64_userData = sessionStorage.getItem('user')
+        if(base64_userData){
+            let userData = JSON.parse(Buffer.from(base64_userData, 'base64').toString('utf8'));
+
+            if(userData.role != 'ROLE_ADMIN'){
+                setIsAuthenticated(false)
+            }else{
+                setIsAuthenticated(true)
+            }
+        } else {
+        setIsAuthenticated(false)
+        }
+        // eslint-disable-next-line
+        }, [])
+
+    if(isAuthenticated == false){
+        return <></>
+    }
+    
+    if(isAuthenticated){
+        return(props.children)
+    }
+}

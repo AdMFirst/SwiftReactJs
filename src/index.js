@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { PrivateRoute } from './components/authorization';
+import { PrivateRoute, AdminRoute } from './components/authorization';
 
 import App from './pages/App';
 import ErrorPage from './pages/ErrorPage';
@@ -29,6 +29,7 @@ import TugasMTK from './pages/TugasMTK';
 import TugasBio from './pages/TugasBio';
 import ProfileEdit from './pages/CompleteRegistration';
 import ProfilePicture from './pages/ProfilePicture';
+import AddTugas from './pages/AddTugas';
 
 // Menaruh daftar routing disini
 const router = createBrowserRouter([
@@ -135,6 +136,11 @@ const router = createBrowserRouter([
   {
     path: '/testredirect',
     element: <PrivateRoute><h1>Hello</h1></PrivateRoute>,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/admin/addtugas/:id',
+    element: <PrivateRoute><AdminRoute><AddTugas /></AdminRoute></PrivateRoute>,
     errorElement: <ErrorPage />
   }
 ]);
